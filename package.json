@@ -2,18 +2,18 @@
   "name": "ecommerce-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
     "watch": "tsc -w",
-    "dev": "nodemon dist/index.js --host 0.0.0.0",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "dev": "nodemon dist/index.js --host 0.0.0.0"
+},
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/server": "^4.10.4",
     "dotenv": "^16.4.5",
     "express": "^4.19.1",
     "mongoose": "^8.2.2",
@@ -29,6 +29,8 @@
     "@types/multer": "^1.4.11",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.4"
   }
 }
