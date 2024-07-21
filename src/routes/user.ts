@@ -1,6 +1,6 @@
 import express, { Router } from "express"
 import { deleteUser, getAllUsers, getUser, newUser } from "../controllers/user.js";
-import { adminOnly } from "../middlewares/ auth.js";
+import { adminOnly } from "../middlewares/auth.js";
 
 
  
