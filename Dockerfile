@@ -1,39 +1,29 @@
-# Builder stage
-FROM node:20-alpine as builder
+# Use the official Node.js image as the base image
+FROM node:20-alpine
 
-WORKDIR /app
+# Create and set the working directory
+WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-RUN npm ci
+# Install dependencies
+RUN npm install
 
+# Copy the rest of the application code to the working directory
 COPY . .
 
+# Install TypeScript globally
+RUN npm install -g typescript
+
+# Build the TypeScript code
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine
+# Check if the dist directory and index.js file exist
+RUN ls -la dist
 
-WORKDIR /app
+# Expose the port the app runs on
+EXPOSE 3000
 
-COPY package*.json ./
-
-# Set environment to production
-ENV NODE_ENV=production
-
-RUN npm ci
-
-COPY --from=builder /app/dist ./dist
-
-# Change ownership from root to Node
-RUN chown -R node:node /app && chmod -R 755 /app
-
-RUN npm install pm2 -g
-
-COPY ecosystem.config.mjs .
-
-USER node
-
-EXPOSE 5513
-
-CMD ["pm2-runtime", "start", "ecosystem.config.mjs"]
+# Command to run the app
+CMD ["npm", "run", "dev"]
