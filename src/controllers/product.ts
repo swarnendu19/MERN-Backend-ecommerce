@@ -62,7 +62,7 @@ export const getlatestProducts = asyncHandler(async (req, res, next) => {
 
   export const getSingleProduct = asyncHandler(async (req, res, next) => {
     let product;
-    const id = req.params.id;
+    const id = req.params.id.trim();
     const key = `product-${id}`;
     product = await redis.get(key);
 
@@ -104,7 +104,7 @@ export const getlatestProducts = asyncHandler(async (req, res, next) => {
             description,
             stock,
             category: category.toLowerCase(),
-            photo: photosURL,
+            photos: photosURL,
         })
 
         await invalidateCache({product: true, admin: true})
@@ -135,8 +135,8 @@ export const updateProduct = asyncHandler(
     await deleteFromCloudinary(ids);
 
       // Use Mongoose's `set` method to properly update the DocumentArray
-      product.set({ photos: photosURL });
-  }
+      product.set({ photos: photosURL });  // This method ensures correct typing
+    }
 
   if (name) product.name = name;
   if (price) product.price = price;
